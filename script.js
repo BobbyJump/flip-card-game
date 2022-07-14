@@ -225,11 +225,13 @@ const images8x7 = [{
 ];
 const images6x6 = images8x7.slice(0, 36);
 const images4x4 = images8x7.slice(0, 16);
-const buttons = document.querySelectorAll('button');
+const gameWrapper = document.querySelector('.game-wrapper');
+const greetingsWrapper = document.querySelector('.greetings-wrapper');
+const buttons = document.querySelectorAll('.cards-amount');
 
 function startGame(images, className) {
-    const gameWrapper = document.querySelector('.game-wrapper');
     const sortedImages = randomizeImages(images);
+    const backBtn = createButton();
     let hasPickedCard = false,
     lockBoard = true,
     firstCard, secondCard;
@@ -245,13 +247,15 @@ function startGame(images, className) {
         `;
     });
 
+    gameWrapper.append(backBtn);
+
     const cards = document.querySelectorAll('.card');
     setTimeout(() => {
         cards.forEach(card => card.classList.remove('flip'));
         lockBoard = false;
     }, 3000);
 
-    document.querySelector('.greetings-wrapper').classList.add('hidden');
+    greetingsWrapper.classList.add('hidden');
     gameWrapper.classList.remove('hidden');
 
     function flipCard() {
@@ -303,9 +307,23 @@ function startGame(images, className) {
     cards.forEach(card => {
         card.addEventListener('click', flipCard);
     });
+
+    backBtn.addEventListener('click', () => {
+        gameWrapper.innerHTML = '';
+        gameWrapper.classList.remove(className);
+        gameWrapper.classList.add('hidden');
+        greetingsWrapper.classList.remove('hidden');
+    });
 }
 
 const randomizeImages = data => data.sort(() => Math.random() - 0.5);
+
+const createButton = () => {
+    const backBtn = document.createElement('button');
+    backBtn.classList.add('back-btn');
+    backBtn.textContent = 'Back';
+    return backBtn;
+};
 
 buttons.forEach(button => {
     if (button.dataset.amount === '4x4') {
