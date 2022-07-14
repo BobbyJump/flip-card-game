@@ -1,4 +1,4 @@
-const images = [{
+const images8x7 = [{
         src: 'img/bear.png',
         name: 'bear'
     },
@@ -223,79 +223,120 @@ const images = [{
         name: 'wolf'
     },
 ];
+const images6x6 = images8x7.slice(0, 36);
+const images4x4 = images8x7.slice(0, 16);
+const buttons = document.querySelectorAll('button');
 
-function randomizeImages(data) {
-    return data.sort(() => Math.random() - 0.5);
-}
-
-
-function fillGameArea() {
-    const sortedImages = randomizeImages(images);
+function startGame(images, className) {
     const gameWrapper = document.querySelector('.game-wrapper');
-    gameWrapper.innerHTML = '';
+    const sortedImages = randomizeImages(images);
+    let hasPickedCard = false,
+    lockBoard = true,
+    firstCard, secondCard;
+
+    gameWrapper.classList.add(className);
 
     sortedImages.forEach(image => {
         gameWrapper.innerHTML += `
-            <div class="card" data-name="${image.name}">
+            <div class="card flip" data-name="${image.name}">
                 <img class="front" src=${image.src} alt="${image.name}">
                 <img class="back" src="img/question.jpg" alt="question">
             </div>
         `;
     });
-}
-fillGameArea();
 
-let hasPickedCard = false,
-    lockBoard = false,
-    firstCard, secondCard;
-const cards = document.querySelectorAll('.card');
-
-function flipCard() {
-    if (lockBoard) return;
-    if (this === firstCard) return;
-
-    this.classList.add('flip');
-    if (!hasPickedCard) {
-        hasPickedCard = true;
-        firstCard = this;
-
-        return;
-    }
-
-    secondCard = this;
-    checkForMatch();
-}
-
-function checkForMatch() {
-    if (firstCard.dataset.name === secondCard.dataset.name) {
-        disableCards();
-    } else {
-        unflipCards();
-    }
-}
-
-function disableCards() {
-    firstCard.addEventListener('click', flipCard);
-    secondCard.addEventListener('click', flipCard);
-
-    resetBoard();
-}
-
-function unflipCards() {
-    lockBoard = true;
+    const cards = document.querySelectorAll('.card');
     setTimeout(() => {
-        firstCard.classList.remove('flip');
-        secondCard.classList.remove('flip');
+        cards.forEach(card => card.classList.remove('flip'));
+        lockBoard = false;
+    }, 3000);
 
+    document.querySelector('.greetings-wrapper').classList.add('hidden');
+    gameWrapper.classList.remove('hidden');
+
+    function flipCard() {
+        if (lockBoard) return;
+        if (this === firstCard) return;
+    
+        this.classList.add('flip');
+        if (!hasPickedCard) {
+            hasPickedCard = true;
+            firstCard = this;
+    
+            return;
+        }
+    
+        secondCard = this;
+        checkForMatch();
+    }
+
+    function checkForMatch() {
+        if (firstCard.dataset.name === secondCard.dataset.name) {
+            disableCards();
+        } else {
+            unflipCards();
+        }
+    }
+
+    function disableCards() {
+        firstCard.addEventListener('click', flipCard);
+        secondCard.addEventListener('click', flipCard);
+    
         resetBoard();
-    }, 1000);
+    }
+
+    function unflipCards() {
+        lockBoard = true;
+        setTimeout(() => {
+            firstCard.classList.remove('flip');
+            secondCard.classList.remove('flip');
+    
+            resetBoard();
+        }, 1000);
+    }
+
+    function resetBoard() {
+        [hasPickedCard, lockBoard] = [false, false];
+        [firstCard, secondCard] = [null, null];
+    }
+
+    cards.forEach(card => {
+        card.addEventListener('click', flipCard);
+    });
 }
 
-function resetBoard() {
-    [hasPickedCard, lockBoard] = [false, false];
-    [firstCard, secondCard] = [null, null];
-}
+const randomizeImages = data => data.sort(() => Math.random() - 0.5);
 
-cards.forEach(card => {
-    card.addEventListener('click', flipCard);
+buttons.forEach(button => {
+    if (button.dataset.amount === '4x4') {
+        button.addEventListener('click', () => {
+            startGame(images4x4, 'four-on-four');
+        });
+    }
+    if (button.dataset.amount === '6x6') {
+        button.addEventListener('click', () => {
+            startGame(images6x6, 'six-on-six');
+        });
+    }
+    if (button.dataset.amount === '8x7') {
+        button.addEventListener('click', () => {
+            startGame(images8x7, 'eight-on-seven');
+        });
+    }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

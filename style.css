@@ -5,17 +5,68 @@
 }
 
 body {
+    font-family: 'Arima', cursive;
     height: 100vh;
     background: rgb(245,71,73);
-    background: linear-gradient(48deg, rgba(245,71,73,1) 0%, rgba(211,206,62,1) 50%, rgba(31,148,241,1) 100%);
+    background: linear-gradient(48deg, rgba(245,71,73,1) 0%, rgba(211,206,62,.8) 50%, rgba(31,148,241,1) 100%);
     overflow: hidden;
     display: flex;
+}
+.greetings-wrapper {
+    background-color: rgba(24, 22, 22, 0.2);
+    margin: auto;
+    width: 35%;
+    height: 30%;
+    border-radius: 10px;
+    text-align: center;
+    padding: 15px 0;
+}
+
+.title {
+    font-size: 35px;
+    color: #fff;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #fff;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.cards-amount{
+    margin: 0 5px;
+    font-family: 'Arima', cursive;
+    width: 30%;
+    padding: 5px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+}
+
+.cards-amount:first-child {
+    background-color: rgba(31,148,241,.5);
+    border: 2px solid rgba(31,148,241,1);
+}
+.cards-amount:nth-child(2) {
+    background-color: rgba(211,206,62,.5);
+    border: 2px solid rgba(211,206,62,1);
+}
+.cards-amount:nth-child(3) {
+    background-color: rgba(245,71,73,.5);
+    border: 2px solid rgba(245,71,73,1);
+}
+
+.hidden {
+    display: none !important;
 }
 
 .game-wrapper {
     background-color: rgba(24, 22, 22, 0.2);
-    width: 50%;
-    height: 100%;
+    border-radius: 15px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -23,6 +74,18 @@ body {
     margin: auto;
     padding: 15px 0;
     perspective: 1000px;
+}
+
+.four-on-four {
+    width: 25%;
+}
+
+.six-on-six {
+    width: 40%;
+}
+
+.eight-on-seven {
+    width: 50%;
 }
 
 .card {
