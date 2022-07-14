@@ -50,7 +50,8 @@ body {
     font-size: 18px;
 }
 
-.cards-amount:first-child {
+.cards-amount:first-child,
+.moves-counter {
     background-color: rgba(31,148,241,.5);
     border: 2px solid rgba(31,148,241,1);
 }
@@ -64,11 +65,21 @@ body {
     border: 2px solid rgba(245,71,73,1);
 }
 
-.back-btn {
+.back-btn,
+.moves-counter {
     width:  150px;
     position: absolute;
     top: 0;
     right: -160px;
+}
+
+.moves-counter {
+    left: -155px;
+    padding: 5px 0;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
 }
 
 .hidden {

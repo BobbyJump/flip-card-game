@@ -231,9 +231,11 @@ const buttons = document.querySelectorAll('.cards-amount');
 
 function startGame(images, className) {
     const sortedImages = randomizeImages(images);
-    const backBtn = createButton();
+    const backBtn = createButton('button', 'back-btn', 'Back');
+    const movesCounter = createButton('span', 'moves-counter', 'Moves made: 0');
     let hasPickedCard = false,
     lockBoard = true,
+    counter = 0,
     firstCard, secondCard;
 
     gameWrapper.classList.add(className);
@@ -248,6 +250,7 @@ function startGame(images, className) {
     });
 
     gameWrapper.append(backBtn);
+    gameWrapper.append(movesCounter);
 
     const cards = document.querySelectorAll('.card');
     setTimeout(() => {
@@ -271,6 +274,8 @@ function startGame(images, className) {
         }
     
         secondCard = this;
+        counter++;
+        movesCounter.innerHTML = `Moves made: ${counter}`;
         checkForMatch();
     }
 
@@ -318,10 +323,10 @@ function startGame(images, className) {
 
 const randomizeImages = data => data.sort(() => Math.random() - 0.5);
 
-const createButton = () => {
-    const backBtn = document.createElement('button');
-    backBtn.classList.add('back-btn');
-    backBtn.textContent = 'Back';
+const createButton = (tag, className, txtContent) => {
+    const backBtn = document.createElement(tag);
+    backBtn.classList.add(className);
+    backBtn.textContent = txtContent;
     return backBtn;
 };
 
